@@ -1,0 +1,30 @@
+name: HTML & CSS CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: |
+        npm install -g htmlhint stylelint
+
+    - name: Validate HTML with HTMLHint
+      run: htmlhint index.html
+
+    - name: Validate CSS with Stylelint
+      run: stylelint styles.css
